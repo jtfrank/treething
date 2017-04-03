@@ -30,20 +30,18 @@ public class Forest{
 				Tree currTree;
 				if((currTree = planeOfExistence[i][j].hereTree) != null){
 					tempAge = currTree.getAge();
+					if(tempAge < 12){
+						numSaplings++;
+					}
+					else if(tempAge < 120){
+						numTrees++;
+					}
+					else{
+						numElders++;
+					}
 				}
 				else{
 					numBlank++;
-					continue;
-				}
-				
-				if(tempAge < 12){
-					numSaplings++;
-				}
-				else if(tempAge < 120){
-					numTrees++;
-				}
-				else{
-					numElders++;
 				}
 				
 				Creature currCreature;
