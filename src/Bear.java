@@ -22,17 +22,10 @@
 */
 
 public class Bear extends Creature {
-	private int ageMonths;
-	int xCoord;
-	int yCoord;
 	
 	public Bear(int x, int y){
-		ageMonths = 36 +(((int)Math.random()) % 600);
-		xCoord = x;
-		yCoord = y;
+		super(x, y);
+		ageMonths = 36 +(((int)(Math.random() * 1000)) % 600);
 	}
 	
-	public int getAge(){
-		return ageMonths;
-	}
 }

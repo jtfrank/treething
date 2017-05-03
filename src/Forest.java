@@ -65,10 +65,61 @@ public class Forest{
 
 	}
 	
+	public void printForest(){
+		System.out.print("+");
+		for(int i = 0; i < ((gridSize * 2) + 1); i++){
+			System.out.print("-");
+		}
+		System.out.println("+");
+		
+		for(int i = 0; i < gridSize; i++){
+			System.out.print("| ");
+			for(int j = 0; j < gridSize; j++){
+				Creature currCreature;
+				if((currCreature = planeOfExistence[i][j].hereCreature) != null){
+					if(Lumberjack.class.isInstance(currCreature)){
+						System.out.print("L ");
+					}
+					else{
+						System.out.print("B ");
+					}
+					continue;
+				}
+				
+				int tempAge;
+				Tree currTree;
+				if((currTree = planeOfExistence[i][j].hereTree) != null){
+					tempAge = currTree.getAge();
+					if(tempAge < 12){
+						System.out.print("S ");
+					}
+					else if(tempAge < 120){
+						System.out.print("T ");
+					}
+					else{
+						System.out.print("E ");
+					}
+				}
+				else{
+					System.out.print(". ");
+				}
+				
+			}
+			System.out.println("|");
+		}
+		
+		System.out.print("+");
+		for(int i = 0; i < ((gridSize * 2) + 1); i++){
+			System.out.print("-");
+		}
+		System.out.println("+");
+	}
+	
 	public void passOneMonth(){
 		for(int i = 0; i < gridSize; i++){
 			for(int j = 0; j < gridSize; j++){
 				Tree currTree = planeOfExistence[i][j].hereTree;
+				Creature currCreature = planeOfExistence[i][j].hereCreature;
 				if(currTree != null){
 					currTree.growOlder();
 					tryNewTree(currTree);

@@ -29,17 +29,10 @@
  */
 
 public class Lumberjack extends Creature {
-	private int ageMonths;
-	int xCoord;
-	int yCoord;
 	
 	public Lumberjack(int x, int y){
+		super(x, y);
 		ageMonths = 216 + (((int)(Math.random() * 1000)) % 984);
-		xCoord = x;
-		yCoord = y;
 	}
 	
-	public int getAge(){
-		return ageMonths;
-	}
 }

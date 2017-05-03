@@ -7,12 +7,14 @@ public class ForestSim{
 
 		Forest mirkwood = new Forest(theBoat.gridSize);
 		
+		mirkwood.printForest();
 		mirkwood.printTreeDistribution();
 		
 		for(int i = 0; i < 100; i++){
 			mirkwood.passOneMonth();
 		}
 		
+		mirkwood.printForest();
 		mirkwood.printTreeDistribution();
 	}
 
