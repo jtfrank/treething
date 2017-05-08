@@ -124,6 +124,18 @@ public class Forest{
 					currTree.growOlder();
 					tryNewTree(currTree);
 				}
+				if(currCreature != null){
+					currCreature.wander(planeOfExistence, gridSize);
+				}
+			}
+		}
+		
+		for(int i = 0; i < gridSize; i++){
+			for(int j = 0; j < gridSize; j++){
+				Creature currCreature = planeOfExistence[i][j].hereCreature;
+				if(currCreature != null){
+					currCreature.resetWander();
+				}
 			}
 		}
 	}
@@ -134,7 +146,7 @@ public class Forest{
 			int startX = sourceTree.xCoord;
 			int startY = sourceTree.yCoord;
 			int chance = (((int)Math.random()) * 1000) % 8;
-			ArrayList<WorldTile> nearbySpaces = generateNearbySpaces(startX, startY);
+			ArrayList<WorldTile> nearbySpaces = WorldTile.generateNearbySpaces(startX, startY, planeOfExistence, gridSize);
 			
 			int tries = 0;
 			while(tries < 8){
@@ -155,45 +167,4 @@ public class Forest{
 		}
 	}
 	
-	ArrayList<WorldTile> generateNearbySpaces(int initX, int initY){
-		ArrayList<WorldTile> listOfSpaces = new ArrayList<WorldTile>(8);
-		int up, down, left, right;
-		
-		if(initX == 0){
-			left = gridSize - 1;
-			right = initX + 1;
-		}
-		else if(initX == (gridSize - 1)){
-			right = 0;
-			left = initX - 1;
-		}
-		else{
-			left = initX -1;
-			right = initX + 1;
-		}
-		
-		if(initY == 0){
-			up = gridSize - 1;
-			down = initY + 1;
-		}
-		else if(initY == (gridSize - 1)){
-			down = 0;
-			up = initY - 1;
-		}
-		else{
-			up = initY - 1;
-			down = initY + 1;
-		}
-		
-		listOfSpaces.add(planeOfExistence[initX][up]);
-		listOfSpaces.add(planeOfExistence[right][up]);
-		listOfSpaces.add(planeOfExistence[right][initY]);
-		listOfSpaces.add(planeOfExistence[right][down]);
-		listOfSpaces.add(planeOfExistence[initX][down]);
-		listOfSpaces.add(planeOfExistence[left][down]);
-		listOfSpaces.add(planeOfExistence[left][initY]);
-		listOfSpaces.add(planeOfExistence[left][up]);
-		
-		return listOfSpaces;
-	}
 }

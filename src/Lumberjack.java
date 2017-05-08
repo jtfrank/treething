@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /*
   They cut down trees, they skip and jump they like to press wild flowers.
 
@@ -33,6 +35,44 @@ public class Lumberjack extends Creature {
 	public Lumberjack(int x, int y){
 		super(x, y);
 		ageMonths = 216 + (((int)(Math.random() * 1000)) % 984);
+	}
+	
+	public void wander(WorldTile[][] planeOfExistence, int gridSize){
+		if(haveWandered) return;
+		
+		for(int i = 0; i < 3; i++){
+			int startX = xCoord;
+			int startY = yCoord;
+			int chance = (((int)Math.random()) * 1000) % 8;
+			ArrayList<WorldTile> nearbySpaces = WorldTile.generateNearbySpaces(startX, startY, planeOfExistence, gridSize);
+			int tries = 0;
+			while(tries < 8){
+				tries++;
+				WorldTile wt = nearbySpaces.get(chance);
+				
+				if(wt.hereCreature == null){
+					xCoord = wt.xCoord;
+					yCoord = wt.yCoord;
+					wt.hereCreature = this;
+					planeOfExistence[startX][startY].hereCreature = null;
+					if(wt.hereTree != null){
+						if(wt.hereTree.getAge() > 12){
+							wt.hereTree = null;
+							i = 3;
+						}
+					}
+					break;
+				}
+				if(chance < 7){
+					chance++;
+				}
+				else{
+					chance = 0;
+				}
+			}
+		}
+		
+		haveWandered = true;
 	}
 	
 }
