@@ -50,6 +50,14 @@ public class Bear extends Creature {
 					planeOfExistence[startX][startY].hereCreature = null;
 					break;
 				}
+				if(wt.hereCreature instanceof Lumberjack){
+					xCoord = wt.xCoord;
+					yCoord = wt.yCoord;
+					wt.hereCreature = this;
+					planeOfExistence[startX][startY].hereCreature = null;
+					i = 5;
+					break;
+				}
 				if(chance < 7){
 					chance++;
 				}
