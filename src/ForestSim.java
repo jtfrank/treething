@@ -10,8 +10,9 @@ public class ForestSim{
 		mirkwood.printForest();
 		mirkwood.printTreeDistribution();
 		
-		for(int i = 0; i < 100; i++){
-			mirkwood.passOneMonth();
+		for(int i = 0; i < 10; i++){
+			System.out.println("Year: " + (i+1));
+			mirkwood.passOneYear();
 		}
 		
 		mirkwood.printForest();

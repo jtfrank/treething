@@ -37,8 +37,9 @@ public class Lumberjack extends Creature {
 		ageMonths = 216 + (((int)(Math.random() * 1000)) % 984);
 	}
 	
-	public void wander(WorldTile[][] planeOfExistence, int gridSize){
-		if(haveWandered) return;
+	public int wander(WorldTile[][] planeOfExistence, int gridSize){
+		int lumberHarvested = 0;
+		if(haveWandered) return lumberHarvested;
 		
 		for(int i = 0; i < 3; i++){
 			int startX = xCoord;
@@ -51,12 +52,15 @@ public class Lumberjack extends Creature {
 				WorldTile wt = nearbySpaces.get(chance);
 				
 				if(wt.hereCreature == null){
+					int treeAge = 0;
 					xCoord = wt.xCoord;
 					yCoord = wt.yCoord;
 					wt.hereCreature = this;
 					planeOfExistence[startX][startY].hereCreature = null;
 					if(wt.hereTree != null){
-						if(wt.hereTree.getAge() > 12){
+						if((treeAge = wt.hereTree.getAge()) >= 12){
+							lumberHarvested++;
+							if(treeAge >= 120) lumberHarvested++;
 							wt.hereTree = null;
 							i = 3;
 						}
@@ -73,6 +77,7 @@ public class Lumberjack extends Creature {
 		}
 		
 		haveWandered = true;
+		return lumberHarvested;
 	}
 	
 }

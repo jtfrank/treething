@@ -65,6 +65,89 @@ public class Forest{
 
 	}
 	
+	public void printForestStatus(){
+		int totalSpaces = gridSize*gridSize;
+		int numSaplings = 0;
+		int numTrees = 0;
+		int numElders = 0;
+		int numBlank = 0;
+		int numLumberjacks = 0;
+		int numBears = 0;
+		
+		double sapPercent, treePercent, elderPercent, blankPercent, lumberjackPercent, bearPercent = 0;
+		
+		for(int i = 0; i < gridSize; i++){
+			for(int j = 0; j < gridSize; j++){
+				int tempAge;
+				Tree currTree;
+				if((currTree = planeOfExistence[i][j].hereTree) != null){
+					tempAge = currTree.getAge();
+					if(tempAge < 12){
+						numSaplings++;
+					}
+					else if(tempAge < 120){
+						numTrees++;
+					}
+					else{
+						numElders++;
+					}
+				}
+				else{
+					numBlank++;
+				}
+				
+				Creature currCreature;
+				if((currCreature = planeOfExistence[i][j].hereCreature) != null){
+					if(Lumberjack.class.isInstance(currCreature)){
+						numLumberjacks++;
+					}
+					else{
+						numBears++;
+					}
+				}
+			}
+		}
+		
+		sapPercent = (double)numSaplings/totalSpaces;
+		treePercent = (double)numTrees/totalSpaces;
+		elderPercent = (double)numElders/totalSpaces;
+		blankPercent = (double)numBlank/totalSpaces;
+		lumberjackPercent = (double)numLumberjacks/totalSpaces;
+		bearPercent = (double)numBears/totalSpaces;
+		
+		numSaplings = (int) (sapPercent * 50);
+		numTrees = (int) (treePercent * 50);
+		numElders = (int) (elderPercent * 50);
+		numBlank = (int) (blankPercent * 50);
+		numLumberjacks = (int) (lumberjackPercent * 50);
+		numBears = (int) (bearPercent * 50);
+		
+		while(numSaplings + numTrees + numElders + numBlank + numLumberjacks + numBears < 50){
+			numBlank++;
+		}
+		
+		System.out.print("[");
+		for(int i = 0; i < numSaplings; i++){
+			System.out.print("S");
+		}
+		for(int i = 0; i < numTrees; i++){
+			System.out.print("T");
+		}
+		for(int i = 0; i < numElders; i++){
+			System.out.print("E");
+		}
+		for(int i = 0; i < numLumberjacks; i++){
+			System.out.print("L");
+		}
+		for(int i = 0; i < numBears; i++){
+			System.out.print("B");
+		}
+		for(int i = 0; i < numBlank; i++){
+			System.out.print(".");
+		}
+		System.out.println("]");
+	}
+	
 	public void printForest(){
 		System.out.print("+");
 		for(int i = 0; i < ((gridSize * 2) + 1); i++){
@@ -115,7 +198,9 @@ public class Forest{
 		System.out.println("+");
 	}
 	
-	public void passOneMonth(){
+	public MonthlyResults passOneMonth(){
+		MonthlyResults results = new MonthlyResults();
+		
 		for(int i = 0; i < gridSize; i++){
 			for(int j = 0; j < gridSize; j++){
 				Tree currTree = planeOfExistence[i][j].hereTree;
@@ -125,7 +210,14 @@ public class Forest{
 					tryNewTree(currTree);
 				}
 				if(currCreature != null){
-					currCreature.wander(planeOfExistence, gridSize);
+					int retval = 0;
+					retval = currCreature.wander(planeOfExistence, gridSize);
+					if(currCreature instanceof Lumberjack){
+						results.lumberHarvested += retval;
+					}
+					if(currCreature instanceof Bear){
+						results.mawIncidents += retval;
+					}
 				}
 			}
 		}
@@ -138,6 +230,21 @@ public class Forest{
 				}
 			}
 		}
+		
+		return results; 
+	}
+	
+	public void passOneYear(){
+		int lumberHarvested = 0;
+		int mawIncidents = 0;
+		MonthlyResults results;
+		for(int i = 0; i < 12; i ++){
+			results = this.passOneMonth();
+			lumberHarvested += results.lumberHarvested;
+			mawIncidents += results.mawIncidents;
+		}
+		this.printForestStatus();
+		System.out.println("Lumber Harvested: " + lumberHarvested + " | mawIncidents: " + mawIncidents);
 	}
 	
 	void tryNewTree(Tree sourceTree){
@@ -164,6 +271,16 @@ public class Forest{
 					chance = 0;
 				}
 			}
+		}
+	}
+	
+	class MonthlyResults {
+		int lumberHarvested;
+		int mawIncidents;
+		
+		MonthlyResults(){
+			lumberHarvested = 0;
+			mawIncidents = 0;
 		}
 	}
 	

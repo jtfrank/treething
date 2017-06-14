@@ -14,8 +14,8 @@ public class Creature {
 		return ageMonths;
 	}
 	
-	public void wander(WorldTile[][] planeOfExistence, int gridSize){
-		if(haveWandered) return;
+	public int wander(WorldTile[][] planeOfExistence, int gridSize){
+		return 0;
 	}
 	
 	public void resetWander(){

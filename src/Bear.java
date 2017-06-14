@@ -30,8 +30,9 @@ public class Bear extends Creature {
 		ageMonths = 36 +(((int)(Math.random() * 1000)) % 600);
 	}
 	
-	public void wander(WorldTile[][] planeOfExistence, int gridSize){
-		if(haveWandered) return;
+	public int wander(WorldTile[][] planeOfExistence, int gridSize){
+		int mawIncident = 0;
+		if(haveWandered) return mawIncident;
 		
 		for(int i = 0; i < 5; i++){
 			int startX = xCoord;
@@ -56,6 +57,7 @@ public class Bear extends Creature {
 					wt.hereCreature = this;
 					planeOfExistence[startX][startY].hereCreature = null;
 					i = 5;
+					mawIncident++;
 					break;
 				}
 				if(chance < 7){
@@ -68,6 +70,7 @@ public class Bear extends Creature {
 		}
 		
 		haveWandered = true;
+		return mawIncident;
 	}
 	
 }
