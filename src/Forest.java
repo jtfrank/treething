@@ -252,7 +252,7 @@ public class Forest{
 		if(spawn){
 			int startX = sourceTree.xCoord;
 			int startY = sourceTree.yCoord;
-			int chance = (((int)Math.random()) * 1000) % 8;
+			int chance = ((int)(Math.random() * 1000)) % 8;
 			ArrayList<WorldTile> nearbySpaces = WorldTile.generateNearbySpaces(startX, startY, planeOfExistence, gridSize);
 			
 			int tries = 0;

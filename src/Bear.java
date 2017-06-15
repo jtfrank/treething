@@ -37,7 +37,7 @@ public class Bear extends Creature {
 		for(int i = 0; i < 5; i++){
 			int startX = xCoord;
 			int startY = yCoord;
-			int chance = (((int)Math.random()) * 1000) % 8;
+			int chance = ((int)(Math.random() * 1000)) % 8;
 			ArrayList<WorldTile> nearbySpaces = WorldTile.generateNearbySpaces(startX, startY, planeOfExistence, gridSize);
 			int tries = 0;
 			while(tries < 8){
