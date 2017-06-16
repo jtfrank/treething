@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 
 public class WorldTile {
+	public static ArrayList<Lumberjack> masterLumberjackList = new ArrayList<Lumberjack>();
+	public static ArrayList<Bear> masterBearList = new ArrayList<Bear>();
+	
 	Tree hereTree = null;
 	Creature hereCreature = null;
 	int xCoord;

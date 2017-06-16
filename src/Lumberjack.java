@@ -35,6 +35,7 @@ public class Lumberjack extends Creature {
 	public Lumberjack(int x, int y){
 		super(x, y);
 		ageMonths = 216 + (((int)(Math.random() * 1000)) % 984);
+		WorldTile.masterLumberjackList.add(this);
 	}
 	
 	public int wander(WorldTile[][] planeOfExistence, int gridSize){

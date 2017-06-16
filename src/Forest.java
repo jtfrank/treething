@@ -231,6 +231,10 @@ public class Forest{
 			}
 		}
 		
+		if(WorldTile.masterLumberjackList.size() == 0){
+			addRandomLumberjack();
+		}
+		
 		return results; 
 	}
 	
@@ -243,6 +247,29 @@ public class Forest{
 			lumberHarvested += results.lumberHarvested;
 			mawIncidents += results.mawIncidents;
 		}
+		if(mawIncidents > 0){
+			removeRandomBear();
+		}
+		else{
+			addRandomBear();
+		}
+		
+		int numLumberjacks = WorldTile.masterLumberjackList.size();
+		if(lumberHarvested > numLumberjacks){
+			int tempLumber = lumberHarvested;
+			while(tempLumber > numLumberjacks){
+				addRandomLumberjack();
+				tempLumber -= 25;
+			}
+		}
+		else{
+			int tempLumber = lumberHarvested;
+			while(tempLumber < numLumberjacks){
+				removeRandomLumberjack();
+				tempLumber += 1;
+			}
+		}
+		
 		this.printForestStatus();
 		System.out.println("Lumber Harvested: " + lumberHarvested + " | mawIncidents: " + mawIncidents);
 	}
@@ -272,6 +299,72 @@ public class Forest{
 				}
 			}
 		}
+	}
+	
+	void populateMasterLists(){
+		for(int i = 0; i < gridSize; i++){
+			for(int j = 0; j < gridSize; j++){
+				Creature currCreature = planeOfExistence[i][j].hereCreature;
+				if(currCreature != null){
+					if(currCreature instanceof Lumberjack){
+						WorldTile.masterLumberjackList.add((Lumberjack)currCreature);
+					}
+					if(currCreature instanceof Bear){
+						WorldTile.masterBearList.add((Bear)currCreature);
+					}
+				}
+			}
+		}	
+	}
+	
+	Bear chooseRandomBear(){
+		int numBears = WorldTile.masterBearList.size();
+		int numberOfTheBeast = ((int)(Math.random() * 1000)) % numBears;
+		return WorldTile.masterBearList.get(numberOfTheBeast);
+	}
+	
+	Lumberjack chooseRandomLumberjack(){
+		int numLumberjacks = WorldTile.masterLumberjackList.size();
+		int numberOfTheMan = ((int)(Math.random() * 1000)) % numLumberjacks;
+		return WorldTile.masterLumberjackList.get(numberOfTheMan);
+	}
+	
+	WorldTile chooseRandomWorldTile(){
+		int randNum1 = ((int)(Math.random() * 1000)) % gridSize;
+		int randNum2  = ((int)(Math.random() * 1000)) % gridSize;
+		return planeOfExistence[randNum1][randNum2];
+	}
+	
+	void addRandomLumberjack(){
+		WorldTile theTile = chooseRandomWorldTile();
+		int i = 0;
+		while(theTile.hereCreature != null && i < (gridSize*gridSize)){
+			theTile = chooseRandomWorldTile();
+			i++;
+		}
+		theTile.hereCreature = new Lumberjack(theTile.xCoord, theTile.yCoord);
+	}
+	
+	void addRandomBear(){
+		WorldTile theTile = chooseRandomWorldTile();
+		int i = 0;
+		while(theTile.hereCreature != null && i < (gridSize*gridSize)){
+			theTile = chooseRandomWorldTile();
+			i++;
+		}
+		theTile.hereCreature = new Bear(theTile.xCoord, theTile.yCoord);
+	}
+	
+	void removeRandomBear(){
+		Bear unluckyBear = chooseRandomBear();
+		WorldTile.masterBearList.remove(unluckyBear);
+		planeOfExistence[unluckyBear.xCoord][unluckyBear.yCoord].hereCreature = null;
+	}
+	
+	void removeRandomLumberjack(){
+		Lumberjack unluckyJack= chooseRandomLumberjack();
+		WorldTile.masterLumberjackList.remove(unluckyJack);
+		planeOfExistence[unluckyJack.xCoord][unluckyJack.yCoord].hereCreature = null;
 	}
 	
 	class MonthlyResults {

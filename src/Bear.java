@@ -28,6 +28,7 @@ public class Bear extends Creature {
 	public Bear(int x, int y){
 		super(x, y);
 		ageMonths = 36 +(((int)(Math.random() * 1000)) % 600);
+		WorldTile.masterBearList.add(this);
 	}
 	
 	public int wander(WorldTile[][] planeOfExistence, int gridSize){
@@ -54,6 +55,7 @@ public class Bear extends Creature {
 				if(wt.hereCreature instanceof Lumberjack){
 					xCoord = wt.xCoord;
 					yCoord = wt.yCoord;
+					WorldTile.masterLumberjackList.remove(wt.hereCreature);
 					wt.hereCreature = this;
 					planeOfExistence[startX][startY].hereCreature = null;
 					i = 5;

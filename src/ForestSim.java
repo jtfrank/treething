@@ -10,13 +10,16 @@ public class ForestSim{
 		mirkwood.printForest();
 		mirkwood.printTreeDistribution();
 		
-		for(int i = 0; i < 3; i++){
+		System.out.println("#lumberjacks: " + WorldTile.masterLumberjackList.size() + " #bears: " + WorldTile.masterBearList.size());
+		
+		for(int i = 0; i < 100; i++){
 			System.out.println("Year: " + (i+1));
 			mirkwood.passOneYear();
 		}
 		
 		mirkwood.printForest();
 		mirkwood.printTreeDistribution();
+		System.out.println("#lumberjacks: " + WorldTile.masterLumberjackList.size() + " #bears: " + WorldTile.masterBearList.size());
 	}
 
 	/*  TODO
@@ -42,7 +45,7 @@ public class ForestSim{
 		int treePerc;
 	
 		ArgBoat(){
-			gridSize = 10;
+			gridSize = 20;
 			lumberjackPerc = 10;
 			bearPerc = 2;
 			treePerc = 50;
