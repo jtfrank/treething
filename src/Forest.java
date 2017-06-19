@@ -104,6 +104,9 @@ public class Forest{
 					else{
 						numBears++;
 					}
+					if(currTree == null){
+						numBlank--;
+					}
 				}
 			}
 		}
@@ -271,7 +274,6 @@ public class Forest{
 		}
 		
 		this.printForestStatus();
-		System.out.println("Lumber Harvested: " + lumberHarvested + " | mawIncidents: " + mawIncidents);
 	}
 	
 	void tryNewTree(Tree sourceTree){
